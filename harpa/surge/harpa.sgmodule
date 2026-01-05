@@ -1,0 +1,15 @@
+#!name=HARPA AI Premium Bypass
+#!desc=注入 HARPA AI API 响应
+#!requirement=SYSTEM='macOS'
+#!homepage=https://github.com/SurfRid3r/SurfScripts
+#!icon=https://harpa.ai/favicon.ico
+
+[MITM]
+hostname = %APPEND% api.harpa.ai
+
+[Header Rewrite]
+http-request ^https://api\.harpa\.ai/api/v1/auth/account header-del If-None-Match
+http-request ^https://api\.harpa\.ai/api/v1/auth/account header-del If-Modified-Since
+
+[Body Rewrite]
+http-response-jq ^https://api\.harpa\.ai/api/v1/auth/account '.account.products.x.status = true | .account.stats.pm = 0'
